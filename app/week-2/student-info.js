@@ -4,8 +4,8 @@ export default function StudentInfo() {
     <main>
         <p>Student Name: Joao Santiago</p>
         <p>
-            Github repository can be found 
-            <a href="https://github.com/Santiago22-py/cprg306-assignments"> here.</a>
+            Link to the GitHub repository:
+            <a href="https://github.com/Santiago22-py/cprg306-assignments"> https://github.com/Santiago22-py/cprg306-assignments</a>
         </p>
     </main>
   );
