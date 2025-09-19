@@ -1,4 +1,4 @@
-# CPRG 306 - Assingments
+# CPRG 306 - Assignments
 
 Web developmentAssignments <br>
 
