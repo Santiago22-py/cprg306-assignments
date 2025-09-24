@@ -1,6 +1,6 @@
 # CPRG 306 - Assignments
 
-Web developmentAssignments <br>
+Web development Assignments <br>
 
 **Desc:** The purpose this repository contains the assignments for the cprg 306 course
 
