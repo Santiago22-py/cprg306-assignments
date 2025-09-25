@@ -3,7 +3,7 @@
 
 Web development Assignments <br>
 
-**Desc:** The purpose this repository contains the assignments for the cprg 306 course
+**Desc:** The purpose this repository contains the assignments for the cprg 306 course <br>
 **Link to the Vercel Deployment:** https://cprg306-assignments-liard-eight.vercel.app/
 
 **Week 2:** 
