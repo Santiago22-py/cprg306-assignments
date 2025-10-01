@@ -9,12 +9,14 @@ export default function NewItem()
     //Function to increment quantity
     const increment = () => 
     {   
+        if (quantity === 20) return; //Prevents quantity from exceeding 20
         setQuantity(quantity + 1);
     }; 
 
     //Function to decrement quantity
     const decrement = () => 
     {   
+        if (quantity === 1) return; //Prevents quantity from going below 1
         setQuantity(quantity - 1);
     };
 
