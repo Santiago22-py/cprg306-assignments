@@ -17,3 +17,9 @@ Web development Assignments <br>
 - Added item.js, itemlist.js and page.js file
 - Built the item.js and itemlist.js components
 - Modified root page.js file
+
+**Week 4:** 
+- Created week-4 fodler
+- added page.js and new-item.js files
+- Built component and increment/decrement functions using the useState hook
+- Modified root page.js file
