@@ -1,104 +1,60 @@
+"use client"
+
 import ShoppingListItem from "./item";
+import {useState} from "react";
+
+//Load the data from the JSON file
+import items from "./item.json";
 
 export default function ShoppingList()
-{
-    const item1 = 
+{   
+   
+    const [sortBy, setSortBy] = useState("name"); //State for sorting, initialized to "name"  
+
+    //Functions to handle sorting
+    const handleSortByName = () => setSortBy("name");
+    const handleSortByCategory = () => setSortBy("category");
+
+    //Sort items based on name
+    const myCompare = (a, b) => 
     {
-    name: "milk, 4 L 🥛",
-    quantity: 1,
-    category: "dairy",
+        if (a[sortBy] < b[sortBy]) return -1;
+        if (a[sortBy] > b[sortBy]) return 1;
+        return 0;
     };
- 
-    const item2 = 
+
+    const sortedItems = [...items].sort(myCompare);
+
+    //Function to get the button class based on the current sorting state (Avoid the spaghetti code I had at first)
+    const getButtonClass = (buttonType) =>
     {
-    name: "bread 🍞",
-    quantity: 2,
-    category: "bakery",
-    };
- 
-    const item3 = 
-    {
-    name: "eggs, dozen 🥚",
-    quantity: 2,
-    category: "dairy",
-    };
- 
-    const item4 = 
-    {
-    name: "bananas 🍌",
-    quantity: 6,
-    category: "produce",
-    };
+        const activeClass = "px-3 py-1 rounded border text-sm transition-colors bg-blue-600 text-white border-blue-600";
+        const inactiveClass = "px-3 py-1 rounded border text-sm transition-colors bg-white text-gray-800 border-gray-300 hover:bg-gray-300";
+        return sortBy === buttonType ? activeClass : inactiveClass;
+    }
     
-    const item5 = 
-    {
-    name: "broccoli 🥦",
-    quantity: 3,
-    category: "produce",
-    };
-    
-    const item6 = 
-    {
-    name: "chicken breasts, 1 kg 🍗",
-    quantity: 1,
-    category: "meat",
-    };
-    
-    const item7 = 
-    {
-    name: "pasta sauce 🍝",
-    quantity: 3,
-    category: "canned goods",
-    };
-    
-    const item8 = 
-    {
-    name: "spaghetti, 454 g 🍝",
-    quantity: 2,
-    category: "dry goods",
-    };
-    
-    const item9 = 
-    {
-    name: "toilet paper, 12 pack 🧻",
-    quantity: 1,
-    category: "household",
-    };
-    
-    const item10 = 
-    {
-    name: "paper towels, 6 pack",
-    quantity: 1,
-    category: "household",
-    };
-    
-    const item11 = 
-    {
-    name: "dish soap 🍽️",
-    quantity: 1,
-    category: "household",
-    };
-    
-    const item12 = 
-    {
-    name: "hand soap 🧼",
-    quantity: 4,
-    category: "household",
-    };
+
     return (
-        <ul>
-            <ShoppingListItem {...item1}/>
-            <ShoppingListItem {...item2}/>
-            <ShoppingListItem {...item3}/>
-            <ShoppingListItem {...item4}/>
-            <ShoppingListItem {...item5}/>
-            <ShoppingListItem {...item6}/>
-            <ShoppingListItem {...item7}/>
-            <ShoppingListItem {...item8}/>
-            <ShoppingListItem {...item9}/>
-            <ShoppingListItem {...item10}/>
-            <ShoppingListItem {...item11}/>
-            <ShoppingListItem {...item12}/>
-        </ul>
+        <div>
+            {/* Sorting buttons */}
+            <div className="flex items-center gap-2 mb-4">
+                <p>Sort by:</p>
+                <button className={getButtonClass("name")} onClick={handleSortByName}>Name</button>
+                <button className={getButtonClass("category")} onClick={handleSortByCategory}>Category</button>
+            </div>
+
+            {/* Shopping list */}
+            <ul>
+                {sortedItems.map((item) => 
+                (
+                    <ShoppingListItem 
+                        key={item.id}
+                        name={item.name}
+                        quantity={item.quantity}
+                        category={item.category}
+                    />
+                ))}
+            </ul>
+        </div>
   );
 }
