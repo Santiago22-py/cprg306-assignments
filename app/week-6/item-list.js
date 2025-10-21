@@ -10,6 +10,7 @@ export default function ShoppingList()
 {   
    
     const [sortBy, setSortBy] = useState("name"); //State for sorting, initialized to "name"  
+    const shoppingItems = items;
 
     //Functions to handle sorting
     const handleSortByName = () => setSortBy("name");
@@ -28,7 +29,7 @@ export default function ShoppingList()
         return 0;
     };
 
-    const sortedItems = [...items].sort(myCompare);
+    const sortedItems = shoppingItems.sort(myCompare);
 
     //Function to get the button class based on the current sorting state (Avoid the spaghetti code I had at first)
     const getButtonClass = (buttonType) =>
