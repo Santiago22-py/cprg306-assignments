@@ -3,12 +3,7 @@
 import ShoppingListItem from "./item";
 import {useState} from "react";
 
-//Load the data from the JSON file
-import items from "./item.json";
-
-
-
-export default function ShoppingList()
+export default function ShoppingList({items})
 {   
    
     const [sortBy, setSortBy] = useState("name"); //State for sorting, initialized to "name"  
