@@ -6,6 +6,8 @@ import {useState} from "react";
 //Load the data from the JSON file
 import items from "./item.json";
 
+
+
 export default function ShoppingList()
 {   
    
@@ -42,7 +44,7 @@ export default function ShoppingList()
     return (
         <div>
             {/* Sorting buttons */}
-            <div className="flex items-center gap-2 mb-4">
+            <div className="flex items-center gap-2 mb-4 py-4">
                 <p>Sort by:</p>
                 <button className={getButtonClass("name")} onClick={handleSortByName}>Name</button>
                 <button className={getButtonClass("category")} onClick={handleSortByCategory}>Category</button>
