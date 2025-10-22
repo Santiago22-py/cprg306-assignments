@@ -15,12 +15,12 @@ export default function ShoppingList({items})
     //Sort items based on name
     const myCompare = (a, b) => 
     {
-        if (a[sortBy] < b[sortBy]) return -1;
-        if (a[sortBy] > b[sortBy]) return 1;
+        if (a[sortBy].toLowerCase() < b[sortBy].toLowerCase()) return -1;
+        if (a[sortBy].toLowerCase() > b[sortBy].toLowerCase()) return 1;
 
         //Force sorting by name, if the primary sort is the same
-        if (a.name < b.name) return -1;
-        if (a.name > b.name) return 1;
+        if (a.name.toLowerCase() < b.name.toLowerCase()) return -1;
+        if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
 
         return 0;
     };
