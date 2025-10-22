@@ -2,7 +2,7 @@
 
 import { useState } from "react"; //Import useState hook from React
 
-export default function NewItem()
+export default function NewItem({onAddItem})
 {
     const [quantity, setQuantity] = useState(1);         //State for quantity, initialized to 1
     const [name, setName] = useState("");                //State for name, initialized to an empty string
@@ -10,16 +10,16 @@ export default function NewItem()
 
     //Category options for the dropdown
     const categories = [
-        { value: "Produce", label: "Produce" },
-        { value: "Dairy", label: "Dairy" },
-        { value: "Bakery", label: "Bakery" },
-        { value: "Meat", label: "Meat" },
-        { value: "Frozen Foods", label: "Frozen Foods" },
-        { value: "Canned Goods", label: "Canned Goods" },
-        { value: "Dry Goods", label: "Dry Goods" },
-        { value: "Beverages", label: "Beverages" },
-        { value: "Snacks", label: "Snacks" },
-        { value: "Housegold", label: "Household" },
+        { value: "produce", label: "Produce" },
+        { value: "dairy", label: "Dairy" },
+        { value: "bakery", label: "Bakery" },
+        { value: "meat", label: "Meat" },
+        { value: "frozen Foods", label: "Frozen Foods" },
+        { value: "canned Goods", label: "Canned Goods" },
+        { value: "dry Goods", label: "Dry Goods" },
+        { value: "beverages", label: "Beverages" },
+        { value: "snacks", label: "Snacks" },
+        { value: "household", label: "Household" },
         { value: "other", label: "Other" }
     ];
 
@@ -37,19 +37,27 @@ export default function NewItem()
         setQuantity(quantity - 1);
     };
 
+    //Function to generate a unique ID (courtesy of Copilot)
+    const generateId = () =>
+    {
+        return Math.random().toString(36).substr(2, 9); //Generates a random string as ID
+    }
+
     //Function to handle form submission
     const handleSubmit = (event) =>
     {
         event.preventDefault(); //Prevents default form submission behavior
         //creates an item object with the current state values
-        const item = 
-        {
+        const Newitem = 
+        {   
+            id: generateId(),
             name: name,
             quantity: quantity,
             category: category
         };
-        console.log(item); //Logs the item object to the console
-        alert(`Item added: ${item.name} \nQuantity: ${item.quantity} \nCategory: ${item.category}`); //displays an alert with the item details
+        //console.log(item); //Logs the item object to the console
+        //Replaced the alert with a callback to the parent component to add the item to the list
+        onAddItem(Newitem);
         //Resets the form fields to their initial states
         setName("");
         setQuantity(1);
