@@ -32,17 +32,17 @@ export default function MealIdeas({ingredient})
 {
     const [meals, setMeals] = useState([]); //State to hold meal ideas, initialized to an empty array
 
-    async function loadMealIdeas()
-    {   
-        const data = await fetchMealIdeas(ingredient); // Wait for the data
-        setMeals(data); // Then update the state
-    }
-
     //Use useEffect to fetch meal ideas when the component mounts or when the ingredient changes
     useEffect(() => 
     {
+        async function loadMealIdeas()
+        {   
+            const data = await fetchMealIdeas(ingredient); // Wait for the data
+            setMeals(data); // Then update the state
+        }
+
         loadMealIdeas();
-    }, [ingredient]);
+    }, [ingredient]); // ingredient is the only dependency needed
 
 
     // Return placeholder message if ingredient is empty
@@ -57,8 +57,7 @@ export default function MealIdeas({ingredient})
     // Otherwise, display the meal ideas (if any)
     return (
         <div>
-
-            <h2 className="text-xl font-bold mb-4">Meal Ideas for "{ingredient}"</h2>
+            <h2 className="text-xl font-bold mb-4">Meal Ideas for &quot;{ingredient}&quot;</h2>
             {meals.length === 0 ?  
             (
                 <p>No meals found.</p>
