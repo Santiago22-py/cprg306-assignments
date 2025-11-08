@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { AuthContextProvider } from "./contexts/AuthContext.js"; // Import the AuthContextProvider
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,4 +27,9 @@ export default function RootLayout({ children }) {
       </body>
     </html>
   );
+}
+
+// New layout component to wrap children with AuthContextProvider
+export default function Layout({ children }) {
+  return <AuthContextProvider>{children}</AuthContextProvider>;
 }
