@@ -21,15 +21,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <AuthContextProvider>{children}</AuthContextProvider>
       </body>
     </html>
   );
-}
-
-// New layout component to wrap children with AuthContextProvider
-export default function Layout({ children }) {
-  return <AuthContextProvider>{children}</AuthContextProvider>;
 }
