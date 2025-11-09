@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react';
+import { useUserAuth } from '../../contexts/AuthContext'; //New import for authentication
 import ShoppingListItem from './item-list';
 import NewItem from './new-item';
 import MealIdeas from './meal-ideas.js';
@@ -31,6 +32,8 @@ export default function Page() {
   // State for the selected item name
   const [selectedItemName, setSelectedItemName] = useState('');
 
+  const { user } = useUserAuth(); 
+
   //Event handler for adding an item
   const handleAddItem = (newItem) => 
     {
@@ -42,6 +45,37 @@ export default function Page() {
     const cleanedName = cleanItemName(item.name);
     setSelectedItemName(cleanedName);
     }
+
+//If not authenticated, prompt to log in
+if (!user)
+{
+  return (
+    <div className="flex min-h-screen flex-col items-center justify-center bg-black text-red-400 text-center">
+        <h1 className="mb-4 text-3xl font-bold tracking-widest uppercase">
+          You are not authorized to view this list.
+        </h1>
+        <p className="mb-8 text-lg">
+          These are not the groceries you’re looking for. 
+        </p>
+        <p className="mb-8 text-lg">
+          Only a sith deals in absolutes. Please login to access your shopping list.
+        </p>
+        <a
+          href="/week-9"
+          className="mt-10 rounded-md bg-green-400 px-6 py-3 font-bold text-black hover:bg-green-300 transition"
+        >
+          Click here to return to the light side.
+        </a>
+        <a
+          href="https://www.youtube.com/watch?v=rEq1Z0bjdwc"
+          className="mt-10 rounded-md bg-yellow-400 px-6 py-3 font-bold text-black hover:bg-yellow-300 transition"
+        >
+          Click here.
+        </a>
+        <p>If you do not fear the dark side as I do</p>
+      </div>
+  );
+}
 
 return (
     <main className="p-4 max-w-6xl mx-auto"> {/* Increased max-width to accommodate two columns */}
