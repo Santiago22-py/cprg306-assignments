@@ -32,7 +32,7 @@ export default function Page() {
   // State for the selected item name
   const [selectedItemName, setSelectedItemName] = useState('');
 
-  const { user } = useUserAuth(); 
+  const { user, loading } = useUserAuth(); 
 
   //Event handler for adding an item
   const handleAddItem = (newItem) => 
@@ -45,6 +45,16 @@ export default function Page() {
     const cleanedName = cleanItemName(item.name);
     setSelectedItemName(cleanedName);
     }
+
+//if still loading, show a loading message
+if (loading)
+{
+  return (
+    <div className="flex min-h-screen items-center justify-center text-center">
+      <p>Loading...</p>
+    </div>
+  );
+}
 
 //If not authenticated, prompt to log in
 if (!user)
