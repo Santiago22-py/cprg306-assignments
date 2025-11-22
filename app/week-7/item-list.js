@@ -1,9 +1,9 @@
 "use client";
 
-import ShoppingListItem from "./item";
+import Item from "./item";
 import { useState } from "react";
 
-export default function ShoppingList({ items }) {
+export default function ItemList({ items }) {
   const [sortBy, setSortBy] = useState("name"); //State for sorting, initialized to "name"
 
   //Functions to handle sorting
@@ -51,7 +51,7 @@ export default function ShoppingList({ items }) {
       {/* Shopping list */}
       <ul>
         {sortedItems.map((item) => (
-          <ShoppingListItem
+          <Item
             key={item.id}
             name={item.name}
             quantity={item.quantity}

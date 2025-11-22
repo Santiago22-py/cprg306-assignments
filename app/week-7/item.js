@@ -1,5 +1,5 @@
 //The ShoppingList componant accepts "name", "quantity" and "category" as props and displays them in a list element.
-export default function ShoppingListItem({ name, quantity, category }) {
+export default function Item({ name, quantity, category }) {
   return (
     <li id="Shopping list">
       <div>

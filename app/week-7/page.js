@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import ShoppingListItem from "./item-list";
+import ItemList from "./item-list";
 import NewItem from "./new-item";
 
 //Load the data from the JSON file
@@ -20,7 +20,7 @@ export default function Page() {
     <main className="p-4 max-w-xl mx-auto">
       <h1 className="text-2xl font-bold mb-3">Shopping List</h1>
       <NewItem onAddItem={handleAddItem} />
-      <ShoppingListItem items={items} />
+      <ItemList items={items} />
     </main>
   );
 }
