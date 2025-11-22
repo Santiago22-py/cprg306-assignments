@@ -3,7 +3,7 @@
 import ShoppingListItem from "./item";
 import { useState } from "react";
 
-export default function ShoppingList({ items, onItemSelect }) {
+export default function ItemList({ items, onItemSelect }) {
   const [sortBy, setSortBy] = useState("name"); //State for sorting, initialized to "name"
 
   //Functions to handle sorting

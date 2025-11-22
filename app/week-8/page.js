@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import ShoppingListItem from "./item-list";
+import Item from "./item-list";
 import NewItem from "./new-item";
 import MealIdeas from "./meal-ideas.js";
 

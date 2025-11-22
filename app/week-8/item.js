@@ -1,5 +1,5 @@
 //The ShoppingList componant accepts "name", "quantity" and "category" and "onSelect" as props and displays them in a list element.
-export default function ShoppingListItem({
+export default function Item({
   name,
   quantity,
   category,
