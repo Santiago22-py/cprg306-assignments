@@ -1,6 +1,6 @@
 "use client";
 
-import ShoppingListItem from "./item";
+import Item from "./item";
 import { useState } from "react";
 
 export default function ItemList({ items, onItemSelect }) {
@@ -51,7 +51,7 @@ export default function ItemList({ items, onItemSelect }) {
       {/* Shopping list */}
       <ul>
         {sortedItems.map((item) => (
-          <ShoppingListItem
+          <Item
             key={item.id}
             name={item.name}
             quantity={item.quantity}

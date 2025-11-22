@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Item from "./item-list";
+import ItemList from "./item-list";
 import NewItem from "./new-item";
 import MealIdeas from "./meal-ideas.js";
 
@@ -52,7 +52,7 @@ export default function Page() {
         {/* Left column - Shopping List */}
         <div className="flex-1">
           <NewItem onAddItem={handleAddItem} />
-          <ShoppingListItem
+          <ItemList
             items={items}
             onItemSelect={handleItemSelect} // Pass the handler to ItemList
           />
