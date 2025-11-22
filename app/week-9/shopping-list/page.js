@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useUserAuth } from '../../contexts/AuthContext'; //New import for authentication
-import ShoppingListItem from './item-list';
+import ItemList from './item-list';
 import NewItem from './new-item';
 import MealIdeas from './meal-ideas.js';
 
@@ -96,7 +96,7 @@ return (
         {/* Left column - Shopping List */}
         <div className="flex-1">
           <NewItem onAddItem={handleAddItem} />
-          <ShoppingListItem 
+          <ItemList 
             items={items} 
             onItemSelect={handleItemSelect} // Pass the handler to ItemList
           />
