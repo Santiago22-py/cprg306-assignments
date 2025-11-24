@@ -1,5 +1,5 @@
 import { db } from "../../utils/firebase";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, addDoc, getDocs } from "firebase/firestore";
 
 //Function that retrieves all itmes for a specific user from Firestore
 export async function getItems(userId) {
