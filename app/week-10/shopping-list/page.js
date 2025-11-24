@@ -98,7 +98,7 @@ export default function Page() {
           list.
         </p>
         <a
-          href="/week-9"
+          href="/week-10"
           className="mt-10 rounded-md bg-green-400 px-6 py-3 font-bold text-black hover:bg-green-300 transition">
           Click here to return to the light side.
         </a>
