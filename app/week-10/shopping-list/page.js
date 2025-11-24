@@ -1,107 +1,133 @@
 "use client";
 
-import { useState } from 'react';
-import { useUserAuth } from '../../contexts/AuthContext'; //New import for authentication
-import ItemList from './item-list';
-import NewItem from './new-item';
-import MealIdeas from './meal-ideas.js';
+import { useState, useEffect } from "react";
+import { useUserAuth } from "../../contexts/AuthContext"; //New import for authentication
+import ItemList from "./item-list";
+import NewItem from "./new-item";
+import MealIdeas from "./meal-ideas.js";
 
-//Load the data from the JSON file
-import itemsData from "./item.json";
+//Import getItem and AddItem functions from the shopping list service
+import { getItems, addItem } from "../services/shopping-list-service.js";
 
 //Function to clean the item name for use as an ingredient
 function cleanItemName(itemName) {
   // Remove emojis and other non-ASCII characters
-  let cleaned = itemName.replace(/([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g, '');
-  
+  let cleaned = itemName.replace(
+    /([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g,
+    ""
+  );
+
   // Remove content after comma (size/weight information)
-  cleaned = cleaned.split(',')[0];
-  
+  cleaned = cleaned.split(",")[0];
+
   // Remove content after space followed by numbers (e.g., "1 kg", "2 lb")
   //cleaned = cleaned.replace(/\s*\d+\s*(kg|g|lb|oz|pieces?).*$/i, '');
-  
+
   // Trim any extra whitespace
   return cleaned.trim();
 }
 
-
 export default function Page() {
-
-  // Initialize state with the imported JSON data
-  const [items, setItems] = useState(itemsData);
+  // Initialize state to NOW empty array :D
+  const [items, setItems] = useState([]);
   // State for the selected item name
-  const [selectedItemName, setSelectedItemName] = useState('');
+  const [selectedItemName, setSelectedItemName] = useState("");
 
-  const { user, loading } = useUserAuth(); 
+  const { user, loading } = useUserAuth();
+
+  //Aync function to load items from Firestore
+  const loadItems = async () => {
+    try {
+      const fetchedItems = await getItems(user.uid); //Fetch items for the logged-in user
+      setItems(fetchedItems); //Update state with fetched items
+    } catch (error) {
+      console.error("Error fetching items from users: ", error);
+    }
+  };
+
+  //Use effect to load items when user changes
+  useEffect(() => {
+    //If user is not logged in, clear items
+    if (!user) {
+      setItems([]);
+      return;
+    }
+    //If user is logged in, load their items
+    loadItems();
+  }, [user]); //Dependency on user
 
   //Event handler for adding an item
-  const handleAddItem = (newItem) => 
-    {
-    setItems((prevItems) => [...prevItems, newItem]); //Passes the old items and adds the new item to the list
+  const handleAddItem = async (newItem) => {
+    try {
+      const itemId = await addItem(user.uid, newItem); //Add item for the logged-in user
+      if (itemId) {
+        // If item was added successfully
+        setItems((prevItems) => [...prevItems, { id: itemId, ...newItem }]); //Update state with new item
+      }
+    } catch (error) {
+      console.error("Error adding item: ", error);
     }
+  };
   //Event handler for selecting an item
-  const handleItemSelect = (item) => 
-    {
+  const handleItemSelect = (item) => {
     const cleanedName = cleanItemName(item.name);
     setSelectedItemName(cleanedName);
-    }
+  };
 
-//if still loading, show a loading message
-if (loading)
-{
-  return (
-    <div className="flex min-h-screen items-center justify-center text-center">
-      <p>Loading...</p>
-    </div>
-  );
-}
+  //if still loading, show a loading message
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center text-center">
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
-//If not authenticated, prompt to log in
-if (!user)
-{
-  return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-black text-red-400 text-center">
+  //If not authenticated, prompt to log in
+  if (!user) {
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center bg-black text-red-400 text-center">
         <h1 className="mb-4 text-3xl font-bold tracking-widest uppercase">
           You are not authorized to view this list.
         </h1>
         <p className="mb-8 text-lg">
-          These are not the groceries you’re looking for. 
+          These are not the groceries you’re looking for.
         </p>
         <p className="mb-8 text-lg">
-          Only a sith deals in absolutes. Please login to access your shopping list.
+          Only a sith deals in absolutes. Please login to access your shopping
+          list.
         </p>
         <a
           href="/week-9"
-          className="mt-10 rounded-md bg-green-400 px-6 py-3 font-bold text-black hover:bg-green-300 transition"
-        >
+          className="mt-10 rounded-md bg-green-400 px-6 py-3 font-bold text-black hover:bg-green-300 transition">
           Click here to return to the light side.
         </a>
         <a
           href="https://www.youtube.com/watch?v=rEq1Z0bjdwc"
-          className="mt-10 rounded-md bg-yellow-400 px-6 py-3 font-bold text-black hover:bg-yellow-300 transition"
-        >
+          className="mt-10 rounded-md bg-yellow-400 px-6 py-3 font-bold text-black hover:bg-yellow-300 transition">
           Click here.
         </a>
         <p>If you do not fear the dark side as I do</p>
       </div>
-  );
-}
+    );
+  }
 
-return (
-    <main className="p-4 max-w-6xl mx-auto"> {/* Increased max-width to accommodate two columns */}
+  return (
+    <main className="p-4 max-w-6xl mx-auto">
+      {" "}
+      {/* Increased max-width to accommodate two columns */}
       <h1 className="text-2xl font-bold mb-6">Shopping List</h1>
-      
       {/* Flex container for two-column layout */}
       <div className="flex gap-8">
         {/* Left column - Shopping List */}
         <div className="flex-1">
           <NewItem onAddItem={handleAddItem} />
-          <ItemList 
-            items={items} 
+          <ItemList
+            items={items}
             onItemSelect={handleItemSelect} // Pass the handler to ItemList
           />
         </div>
-        
+
         {/* Right column - Meal Ideas */}
         <div className="flex-1">
           <MealIdeas ingredient={selectedItemName} />
