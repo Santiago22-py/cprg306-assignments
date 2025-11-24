@@ -66,7 +66,7 @@ export default function Page()
             </p>
             <div className="flex flex-col gap-3 mt-6">
 
-                <a href="/week-9/shopping-list"
+                <a href="/week-10/shopping-list"
                 className="rounded-md bg-green-600 px-4 py-2 font-medium text-white hover:bg-green-700 transition"
                 >
                   Go to Shopping List
